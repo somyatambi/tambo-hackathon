@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --calm-gradient: linear-gradient(135deg, #f6f8f6 0%, #e8ebe8 100%);
+    --lavender-gradient: linear-gradient(135deg, #f9f7fb 0%, #e5dcef 100%);
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --calm-gradient: linear-gradient(135deg, #243428 0%, #2a3f2e 100%);
+    --lavender-gradient: linear-gradient(135deg, #52375e 0%, #624172 100%);
+  }
+
+  * {
+    @apply border-sage-200 dark:border-sage-800;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-calm-50 via-warmbeige-50 to-lavender-50 dark:from-calm-900 dark:via-sage-900 dark:to-lavender-900;
+    @apply text-sage-900 dark:text-sage-50;
+    @apply font-sans;
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/70 dark:bg-sage-900/70 backdrop-blur-xl rounded-2xl shadow-lg border border-white/20 dark:border-sage-700/20;
+  }
+
+  .breathing-circle {
+    @apply rounded-full bg-gradient-to-br from-calm-300 to-lavender-300 dark:from-calm-600 dark:to-lavender-600;
+    box-shadow: 0 0 40px rgba(163, 120, 191, 0.3);
+  }
+
+  .mood-button {
+    @apply px-6 py-3 rounded-full glass-card hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer;
+  }
+
+  .journal-textarea {
+    @apply w-full p-6 glass-card focus:outline-none focus:ring-2 focus:ring-calm-400 dark:focus:ring-calm-600 text-sage-800 dark:text-sage-100 placeholder-sage-400 dark:placeholder-sage-500 resize-none;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-full bg-gradient-to-r from-calm-500 to-sage-500 hover:from-calm-600 hover:to-sage-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-full glass-card hover:shadow-lg transition-all duration-300 hover:scale-105 text-sage-700 dark:text-sage-200;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 8s ease infinite;
+  }
+
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
