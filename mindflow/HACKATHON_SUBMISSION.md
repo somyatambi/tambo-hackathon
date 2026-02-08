@@ -289,14 +289,8 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📄 License
+## 👥 Team Naarayani Sena
 
-MIT License - See [LICENSE](./LICENSE)
-
----
-
-## 👥 Team
+**Team Members:** Somya Tambi
 
 Built with ❤️ for the Tambo Hackathon
-
-**Keywords**: mental health, generative UI, Tambo SDK, Claude AI, adaptive interfaces, therapeutic tools, Next.js, TypeScript
