@@ -4,6 +4,8 @@
 
 **An intelligent mental wellness app that uses Tambo's Generative UI to dynamically render therapeutic tools based on your emotional state.**
 
+🚀 **[Try Live Demo](https://tambo-hackathon-chi.vercel.app/)** | 📚 **[View Submission Details](./mindflow/HACKATHON_SUBMISSION.md)**
+
 ---
 
 ## 🎯 Main Project

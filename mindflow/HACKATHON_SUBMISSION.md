@@ -1,5 +1,10 @@
 # 🌊 MindFlow - Hackathon Submission
 
+🚀 **Live Demo:** [https://tambo-hackathon-chi.vercel.app/](https://tambo-hackathon-chi.vercel.app/)  
+💻 **GitHub:** [https://github.com/somyatambi/tambo-hackathon](https://github.com/somyatambi/tambo-hackathon)
+
+---
+
 ## 📝 Project Description
 
 **MindFlow** is an intelligent mental wellness companion that revolutionizes how people interact with therapeutic tools. Instead of navigating through complex menus and choosing from preset options, users simply describe how they're feeling in natural language, and the AI intelligently selects and displays the most helpful therapeutic components.

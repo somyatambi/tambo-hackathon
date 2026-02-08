@@ -1,5 +1,10 @@
 # 📋 Hackathon Submission Info
 
+🚀 **Live Demo:** [https://tambo-hackathon-chi.vercel.app/](https://tambo-hackathon-chi.vercel.app/)  
+💻 **GitHub:** [https://github.com/somyatambi/tambo-hackathon](https://github.com/somyatambi/tambo-hackathon)
+
+---
+
 ## 1. Project Description
 
 **MindFlow** is an intelligent mental wellness companion that uses **Tambo's Generative UI SDK** to dynamically render therapeutic tools based on your emotional state in real-time.

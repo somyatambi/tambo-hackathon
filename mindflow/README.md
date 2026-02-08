@@ -9,7 +9,7 @@
 
 **An intelligent mental wellness companion that adapts therapeutic interfaces to your emotional state in real-time**
 
-[Live Demo](#) • [Documentation](./DOCS_INDEX.md) • [Quick Start](./QUICKSTART.md) • [Install](./INSTALL.md)
+[🚀 Live Demo](https://tambo-hackathon-chi.vercel.app/) • [GitHub](https://github.com/somyatambi/tambo-hackathon)
 
 </div>
 
