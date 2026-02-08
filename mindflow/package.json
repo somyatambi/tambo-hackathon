@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tambo-ai/react": "file:../tambo/react-sdk",
     "@types/canvas-confetti": "^1.9.0",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",
