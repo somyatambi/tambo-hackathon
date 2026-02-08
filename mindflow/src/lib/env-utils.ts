@@ -47,7 +47,7 @@ export function isProduction(): boolean {
 /**
  * Log message only in development
  */
-export function devLog(...args: any[]): void {
+export function devLog(...args: unknown[]): void {
   if (isDevelopment()) {
     console.log('[DEV]', ...args);
   }
@@ -56,7 +56,7 @@ export function devLog(...args: any[]): void {
 /**
  * Log warning only in development
  */
-export function devWarn(...args: any[]): void {
+export function devWarn(...args: unknown[]): void {
   if (isDevelopment()) {
     console.warn('[DEV WARNING]', ...args);
   }
@@ -65,7 +65,7 @@ export function devWarn(...args: any[]): void {
 /**
  * Log error (always logged, but with different formatting in dev)
  */
-export function logError(context: string, error: any): void {
+export function logError(context: string, error: unknown): void {
   if (isDevelopment()) {
     console.error(`[ERROR: ${context}]`, error);
   } else {

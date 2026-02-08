@@ -242,7 +242,7 @@ export async function completeText(
 export async function checkOpenRouterHealth(): Promise<{
   status: 'ok' | 'error';
   message: string;
-  details?: any;
+  details?: unknown;
 }> {
   try {
     const response = await callOpenRouter([

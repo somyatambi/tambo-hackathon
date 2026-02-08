@@ -16,9 +16,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MindFlow - Your Adaptive Mental Wellness Companion",
-  description: "An intelligent, adaptive mental wellness companion that dynamically renders therapeutic interfaces based on your emotional state and needs.",
-  keywords: ["mental wellness", "therapy", "meditation", "journaling", "mood tracking", "anxiety relief"],
+  title: "MindFlow - Your Playful Mental Wellness Companion 🌈",
+  description: "A super fun, AI-powered mental wellness app that adapts to your mood! Built with Tambo's generative UI.",
+  keywords: ["mental wellness", "therapy", "meditation", "journaling", "mood tracking", "anxiety relief", "Tambo AI"],
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${inter.variable} antialiased`}>
+      <body className={`${outfit.variable} ${inter.variable} antialiased font-body`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>

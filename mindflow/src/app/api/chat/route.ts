@@ -1,128 +1,70 @@
-/**
- * OpenRouter Chat API Route
- * 
- * Secure server-side endpoint for communicating with OpenRouter API
- * All OpenRouter calls MUST go through this endpoint to protect the API key
- */
+import { NextRequest } from 'next/server';
 
-import { NextRequest, NextResponse } from 'next/server';
-import { callOpenRouter, OpenRouterMessage } from '@/lib/ai-config';
-import { devLog, logError, trackUsage } from '@/lib/env-utils';
-
-// Input validation
-interface ChatRequest {
-  messages: OpenRouterMessage[];
-  temperature?: number;
-  maxTokens?: number;
-  stream?: boolean;
-}
-
-function validateRequest(body: any): body is ChatRequest {
-  if (!body || typeof body !== 'object') {
-    return false;
-  }
-  
-  if (!Array.isArray(body.messages) || body.messages.length === 0) {
-    return false;
-  }
-  
-  // Validate each message
-  for (const msg of body.messages) {
-    if (!msg.role || !msg.content) {
-      return false;
-    }
-    if (!['system', 'user', 'assistant'].includes(msg.role)) {
-      return false;
-    }
-    if (typeof msg.content !== 'string') {
-      return false;
-    }
-  }
-  
-  return true;
-}
-
-// Sanitize user input to prevent injection attacks
-function sanitizeMessage(content: string): string {
-  // Remove any potentially harmful patterns
-  // This is a basic sanitization - adjust based on your security needs
-  return content
-    .trim()
-    .slice(0, 10000); // Limit message length
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    // Parse request body
-    const body = await request.json();
+    const { message, history } = await req.json();
     
-    // Validate request
-    if (!validateRequest(body)) {
-      return NextResponse.json(
-        { error: 'Invalid request format. Expected { messages: [...] }' },
-        { status: 400 }
-      );
+    // Call OpenRouter for AI response
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+        'X-Title': 'MindFlow - Tambo Hackathon',
+      },
+      body: JSON.stringify({
+        model: 'anthropic/claude-sonnet-4',
+        messages: [
+          {
+            role: 'system',
+            content: `You are MindFlow, a warm and playful AI mental wellness companion powered by Tambo.
+            
+Your role:
+- Analyze user's emotional state from their messages
+- Provide empathetic, supportive responses
+- Suggest appropriate therapeutic techniques
+- Use a friendly, encouraging tone with emojis 🌟
+
+When user shares feelings, you should:
+1. Acknowledge their emotions
+2. Provide supportive guidance
+3. Suggest specific exercises (breathing, journaling, grounding, etc.)
+4. Keep responses concise but warm (2-3 paragraphs max)
+
+Be playful and fun while being genuinely helpful! 🎨✨`
+          },
+          ...history,
+          {
+            role: 'user',
+            content: message
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.7,
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`OpenRouter API error: ${response.status}`);
     }
     
-    // Sanitize messages
-    const sanitizedMessages = body.messages.map(msg => ({
-      ...msg,
-      content: sanitizeMessage(msg.content),
-    }));
+    const data = await response.json();
+    const aiResponse = data.choices[0].message.content;
     
-    devLog('Chat request received:', {
-      messageCount: sanitizedMessages.length,
-      temperature: body.temperature,
-      maxTokens: body.maxTokens,
-    });
-    
-    // Call OpenRouter API
-    const response = await callOpenRouter(sanitizedMessages, {
-      temperature: body.temperature,
-      maxTokens: body.maxTokens,
-      stream: body.stream,
-    });
-    
-    // Track usage for cost monitoring
-    trackUsage({
-      model: response.model,
-      promptTokens: response.usage.prompt_tokens,
-      completionTokens: response.usage.completion_tokens,
-      totalTokens: response.usage.total_tokens,
-      estimatedCost: (response.usage.total_tokens / 1_000_000) * 15,
-      endpoint: '/api/chat',
-    });
-    
-    // Return response
-    return NextResponse.json({
-      success: true,
-      message: response.choices[0]?.message?.content || '',
-      model: response.model,
-      usage: response.usage,
+    return Response.json({ 
+      response: aiResponse,
+      success: true 
     });
     
   } catch (error) {
-    logError('Chat API', error);
-    
-    // Return user-friendly error message
-    const errorMessage = error instanceof Error 
-      ? error.message 
-      : 'An unexpected error occurred';
-    
-    return NextResponse.json(
+    console.error('API Error:', error);
+    return Response.json(
       { 
-        error: errorMessage,
-        success: false,
+        error: 'Failed to get AI response',
+        success: false 
       },
       { status: 500 }
     );
   }
-}
-
-// Prevent GET requests
-export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed. Use POST.' },
-    { status: 405 }
-  );
 }
